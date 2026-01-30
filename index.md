@@ -1,13 +1,11 @@
-# Team Notes 📘
+# Team Notes Main Page
 
 ## 📌 Topics
 - [Markdown Basics](docs/md-basic.md)
 
 ## 🛠 Tools
-- [Markdown Live Viewer](tools/md-live-viewer.html) — Quickly preview and edit MD files in your browser.
+- [Markdown Live Viewer](tools/md-live-viewer.html)
 
 ## 📅 Guidelines
-- Always use **code blocks** for commands or code snippets.
-- Make **clear commit messages** when updating notes.
-- Keep **one topic per section** for readability.
-- Use **consistent file naming** (kebab-case, no spaces).
+- Always use code blocks
+- One topic per section
