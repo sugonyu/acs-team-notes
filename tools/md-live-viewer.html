@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD Live Viewer</title>
+    <!-- 마크다운 파서 라이브러리 (Marked.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --border-color: #ddd;
+            --header-bg: #f8f9fa;
+            --primary-color: #2563eb;
+            --code-bg: #f4f4f4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* 상단 헤더 */
+        header {
+            height: 60px;
+            background-color: var(--header-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            flex-shrink: 0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .branding {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .version {
+            font-size: 0.7rem;
+            color: #666;
+            font-weight: 500;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #222;
+            line-height: 1.2;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        select#langSelect {
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .btn-help {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-help:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* 메인 컨테이너 */
+        main {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 60px);
+        }
+
+        /* 에디터 영역 */
+        .editor-container {
+            flex: 1;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        textarea#editor {
+            width: 100%;
+            height: 100%;
+            border: none;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            background-color: #fafafa;
+            color: #333;
+        }
+
+        /* 프리뷰 영역 */
+        .preview-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: white;
+        }
+
+        /* 마크다운 스타일링 */
+        .markdown-body {
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 0.3em;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+        .markdown-body h1 { font-size: 2em; }
+        .markdown-body h2 { font-size: 1.5em; }
+        .markdown-body p { margin-bottom: 16px; }
+        .markdown-body a { color: var(--primary-color); text-decoration: none; }
+        .markdown-body a:hover { text-decoration: underline; }
+        .markdown-body blockquote {
+            border-left: 4px solid #dfe2e5;
+            color: #6a737d;
+            padding: 0 1em;
+            margin: 0 0 16px 0;
+        }
+        .markdown-body code {
+            background-color: rgba(27,31,35,0.05);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 85%;
+        }
+        .markdown-body pre {
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            padding: 16px;
+            overflow: auto;
+            margin-bottom: 16px;
+        }
+        .markdown-body pre code {
+            background-color: transparent;
+            padding: 0;
+            font-size: 100%;
+        }
+        .markdown-body ul, .markdown-body ol { padding-left: 2em; margin-bottom: 16px; }
+        .markdown-body img { max-width: 100%; height: auto; display: block; margin: 10px 0; border-radius: 4px; }
+        .markdown-body hr { border: none; border-bottom: 2px solid #eaecef; margin: 24px 0; }
+        .markdown-body table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+        .markdown-body table th, .markdown-body table td {
+            border: 1px solid #dfe2e5;
+            padding: 6px 13px;
+        }
+        .markdown-body table tr:nth-child(2n) { background-color: #f6f8fa; }
+
+        /* 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .cheat-sheet-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .cheat-sheet-table th, .cheat-sheet-table td {
+            border: 1px solid #eee;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.9rem;
+            vertical-align: middle;
+        }
+
+        .cheat-sheet-table th { 
+            background-color: #f9fafb;
+            font-weight: 600;
+        }
+
+        /* Demo Styles in Help Modal */
+        .demo-h1 { font-size: 1.5em; font-weight: bold; margin: 0; border-bottom: 1px solid #eee; }
+        .demo-h2 { font-size: 1.3em; font-weight: bold; margin: 0; border-bottom: 1px solid #eee; }
+        .demo-bold { font-weight: bold; }
+        .demo-italic { font-style: italic; }
+        .demo-strike { text-decoration: line-through; }
+        .demo-quote { border-left: 3px solid #dfe2e5; padding-left: 10px; color: #6a737d; margin: 0; }
+        .demo-code { background-color: rgba(27,31,35,0.05); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; }
+        .demo-link { color: var(--primary-color); text-decoration: none; }
+        .demo-link:hover { text-decoration: underline; }
+
+        /* 모바일 반응형 */
+        @media (max-width: 768px) {
+            main { flex-direction: column; }
+            .editor-container {
+                height: 50%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .preview-container { height: 50%; }
+            h1 { font-size: 1rem; }
+            .cheat-sheet-table th, .cheat-sheet-table td {
+                font-size: 0.8rem;
+                padding: 6px;
+            }
+            .btn-help { padding: 6px 12px; font-size: 0.8rem; }
+            header { padding: 0 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <div class="branding">
+                <span class="version">v1.1</span>
+                <h1 id="appTitle">📝 MD Live Viewer</h1>
+            </div>
+        </div>
+        <div class="header-controls">
+            <select id="langSelect">
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="en">🇺🇸 English</option>
+                <option value="fr">🇫🇷 Français</option>
+            </select>
+            <button class="btn-help" id="helpBtn">명령어 가이드</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="editor-container">
+            <textarea id="editor"></textarea>
+        </div>
+        <div class="preview-container">
+            <div id="preview" class="markdown-body"></div>
+        </div>
+    </main>
+
+    <!-- 도움말 모달 -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">마크다운 핵심 가이드</h2>
+                <button class="close-btn" id="closeBtn">&times;</button>
+            </div>
+            <table class="cheat-sheet-table">
+                <colgroup>
+                    <col style="width: 25%">
+                    <col style="width: 35%">
+                    <col style="width: 40%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th id="thFeature">기능</th>
+                        <th id="thSyntax">문법</th>
+                        <th id="thResult">결과</th>
+                    </tr>
+                </thead>
+                <tbody id="cheatSheetBody">
+                    <!-- 자바스크립트로 동적 로딩 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 번역 데이터
+        const i18n = {
+            ko: {
+                title: "📝 MD 라이브 뷰어",
+                helpBtn: "명령어 가이드",
+                placeholder: "여기에 마크다운을 입력하세요...",
+                modalTitle: "마크다운 핵심 가이드",
+                thFeature: "기능",
+                thSyntax: "문법 (입력)",
+                thResult: "결과 (예시)",
+                features: {
+                    h1: "제목 1",
+                    h2: "제목 2",
+                    bold: "굵게",
+                    italic: "기울임",
+                    strike: "취소선",
+                    quote: "인용",
+                    list: "리스트",
+                    link: "링크",
+                    code: "코드",
+                    hr: "가로선"
+                },
+                defaultText: `# 마크다운 종합 예제 📚
+
+이곳은 **실시간 마크다운 뷰어**입니다.
+이 문서는 다양한 마크다운 문법을 보여주는 예제입니다.
+
+## 1. 텍스트 스타일
+* **굵게 (Bold)**
+* *기울임 (Italic)*
+* ~~취소선 (Strikethrough)~~
+* \`인라인 코드 (Inline Code)\`
+
+## 2. 목록 (Lists)
+### 순서 없는 목록
+- 사과 🍎
+- 배 🍐
+
+### 순서 있는 목록
+1. 기획하기
+2. 디자인하기
+
+## 3. 인용문 (Blockquote)
+> "코딩은 시(Poetry)와 같다."
+
+## 4. 코드 블록 (Code Block)
+\`\`\`javascript
+function hello() {
+    console.log("안녕하세요!");
+}
+\`\`\`
+
+## 5. 이미지 (Image)
+![랜덤 이미지](https://picsum.photos/200)
+
+## 6. 테이블 (Table)
+| 품목 | 가격 |
+| :--- | ---: |
+| 사과 | 1,000원 |
+| 수박 | 10,000원 |
+
+---
+직접 수정해보세요! 🚀`
+            },
+            en: {
+                title: "📝 MD Live Viewer",
+                helpBtn: "Cheat Sheet",
+                placeholder: "Type your markdown here...",
+                modalTitle: "Markdown Guide",
+                thFeature: "Feature",
+                thSyntax: "Syntax",
+                thResult: "Result",
+                features: {
+                    h1: "Heading 1",
+                    h2: "Heading 2",
+                    bold: "Bold",
+                    italic: "Italic",
+                    strike: "Strikethrough",
+                    quote: "Blockquote",
+                    list: "List",
+                    link: "Link",
+                    code: "Code",
+                    hr: "Horizontal Rule"
+                },
+                defaultText: `# Markdown Example 📚
+
+Welcome to **MD Live Viewer**.
+This document demonstrates various markdown syntax.
+
+## 1. Text Style
+* **Bold**
+* *Italic*
+* ~~Strikethrough~~
+* \`Inline Code\`
+
+## 2. Lists
+### Unordered List
+- Apple 🍎
+- Pear 🍐
+
+### Ordered List
+1. Plan
+2. Design
+
+## 3. Blockquote
+> "Code is like poetry."
+
+## 4. Code Block
+\`\`\`javascript
+function hello() {
+    console.log("Hello World!");
+}
+\`\`\`
+
+## 5. Image
+![Random Image](https://picsum.photos/200)
+
+## 6. Table
+| Item | Price |
+| :--- | ---: |
+| Apple | $1.00 |
+| Watermelon | $10.00 |
+
+---
+Try editing this! 🚀`
+            },
+            fr: {
+                title: "📝 MD Visualiseur",
+                helpBtn: "Guide Rapide",
+                placeholder: "Tapez votre markdown ici...",
+                modalTitle: "Guide Markdown",
+                thFeature: "Fonctionnalité",
+                thSyntax: "Syntaxe",
+                thResult: "Résultat",
+                features: {
+                    h1: "Titre 1",
+                    h2: "Titre 2",
+                    bold: "Gras",
+                    italic: "Italique",
+                    strike: "Barré",
+                    quote: "Citation",
+                    list: "Liste",
+                    link: "Lien",
+                    code: "Code",
+                    hr: "Ligne Horizontale"
+                },
+                defaultText: `# Exemple Markdown 📚
+
+Bienvenue sur **MD Visualiseur**.
+Ce document montre diverses syntaxes Markdown.
+
+## 1. Style de texte
+* **Gras**
+* *Italique*
+* ~~Barré~~
+* \`Code en ligne\`
+
+## 2. Listes
+### Liste à puces
+- Pomme 🍎
+- Poire 🍐
+
+### Liste numérotée
+1. Planifier
+2. Concevoir
+
+## 3. Citation
+> "Le code est comme la poésie."
+
+## 4. Bloc de code
+\`\`\`javascript
+function hello() {
+    console.log("Bonjour le monde!");
+}
+\`\`\`
+
+## 5. Image
+![Image Aléatoire](https://picsum.photos/200)
+
+## 6. Tableau
+| Article | Prix |
+| :--- | ---: |
+| Pomme | 1,00 € |
+| Pastèque | 10,00 € |
+
+---
+Essayez de modifier ceci ! 🚀`
+            }
+        };
+
+        // DOM 요소
+        const editor = document.getElementById('editor');
+        const preview = document.getElementById('preview');
+        const helpBtn = document.getElementById('helpBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const helpModal = document.getElementById('helpModal');
+        const langSelect = document.getElementById('langSelect');
+        const cheatSheetBody = document.getElementById('cheatSheetBody');
+
+        // 언어 설정 로직
+        function getInitialLang() {
+            // 1. URL 파라미터 확인
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const langParam = urlParams.get('lang');
+                if (langParam && i18n[langParam]) return langParam;
+            } catch (e) {
+                console.log('Cannot access URL parameters', e);
+            }
+
+            // 2. 로컬 스토리지 확인
+            try {
+                const storedLang = localStorage.getItem('md-viewer-lang');
+                if (storedLang && i18n[storedLang]) return storedLang;
+            } catch (e) {
+                console.log('Cannot access localStorage', e);
+            }
+
+            // 3. 기본값 영어 (수정됨)
+            return 'en';
+        }
+
+        let currentLang = getInitialLang();
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // 로컬 스토리지 저장
+            try {
+                localStorage.setItem('md-viewer-lang', lang);
+            } catch (e) {
+                console.log('Cannot save to localStorage', e);
+            }
+            
+            langSelect.value = lang;
+            
+            // UI 텍스트 업데이트
+            const t = i18n[lang];
+            document.getElementById('appTitle').textContent = t.title;
+            document.getElementById('helpBtn').textContent = t.helpBtn;
+            document.getElementById('editor').placeholder = t.placeholder;
+            document.getElementById('modalTitle').textContent = t.modalTitle;
+            document.getElementById('thFeature').textContent = t.thFeature;
+            document.getElementById('thSyntax').textContent = t.thSyntax;
+            document.getElementById('thResult').textContent = t.thResult;
+            document.title = t.title;
+
+            // 도움말 테이블 업데이트
+            updateCheatSheet(t);
+        }
+
+        function updateCheatSheet(t) {
+            const f = t.features;
+            cheatSheetBody.innerHTML = `
+                <tr><td>${f.h1}</td><td># Text</td><td><div class="demo-h1">Text</div></td></tr>
+                <tr><td>${f.h2}</td><td>## Text</td><td><div class="demo-h2">Text</div></td></tr>
+                <tr><td>${f.bold}</td><td>**Text**</td><td><span class="demo-bold">Text</span></td></tr>
+                <tr><td>${f.italic}</td><td>*Text*</td><td><span class="demo-italic">Text</span></td></tr>
+                <tr><td>${f.strike}</td><td>~~Text~~</td><td><span class="demo-strike">Text</span></td></tr>
+                <tr><td>${f.quote}</td><td>> Text</td><td><div class="demo-quote">Text</div></td></tr>
+                <tr><td>${f.list}</td><td>- Item</td><td>• Item</td></tr>
+                <tr><td>${f.link}</td><td>[Link](url)</td><td><a href="#" class="demo-link">Link</a></td></tr>
+                <tr><td>${f.code}</td><td>\`code\`</td><td><span class="demo-code">code</span></td></tr>
+                <tr><td>${f.hr}</td><td>---</td><td><hr style="margin:5px 0;"></td></tr>
+            `;
+        }
+
+        // 렌더링 함수
+        function renderMarkdown() {
+            preview.innerHTML = marked.parse(editor.value, { breaks: true, gfm: true });
+        }
+
+        // 초기화
+        setLanguage(currentLang);
+        // 기본 텍스트를 현재 언어로 설정
+        editor.value = i18n[currentLang].defaultText; 
+        renderMarkdown();
+
+        // 이벤트 리스너
+        editor.addEventListener('input', renderMarkdown);
+        
+        langSelect.addEventListener('change', (e) => {
+            const newLang = e.target.value;
+            setLanguage(newLang);
+            editor.value = i18n[newLang].defaultText;
+            renderMarkdown();
+        });
+
+        helpBtn.addEventListener('click', () => helpModal.style.display = 'flex');
+        closeBtn.addEventListener('click', () => helpModal.style.display = 'none');
+        window.addEventListener('click', (e) => {
+            if (e.target === helpModal) helpModal.style.display = 'none';
+        });
+
+    </script>
+</body>
+</html>
