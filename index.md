@@ -1,11 +1,13 @@
 # Team Notes 📘
 
 ## 📌 Topics
-- [MD](docs/md-basic.md)
-- [PHP](docs/php.md)
-- [Docker](docs/docker.md)
-- [Backend](docs/backend.md)
+- [Markdown Basics](docs/md-basic.md)
 
-## 📅 Rules
-- 명령어는 코드 블록으로
-- 수정 시 커밋 메시지 명확히
+## 🛠 Tools
+- [Markdown Live Viewer](tools/md-live-viewer.html) — Quickly preview and edit MD files in your browser.
+
+## 📅 Guidelines
+- Always use **code blocks** for commands or code snippets.
+- Make **clear commit messages** when updating notes.
+- Keep **one topic per section** for readability.
+- Use **consistent file naming** (kebab-case, no spaces).
