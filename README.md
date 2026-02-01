@@ -1,4 +1,4 @@
-# Team Notes 📘
+# ACS Core Team Notes 📘
 
 **GitHub Pages:** [https://sugonyu.github.io/acs-team-notes/](https://sugonyu.github.io/acs-team-notes/)
 
