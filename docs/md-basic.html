@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Syntax Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        code {
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+        }
+        .lang-btn.active {
+            background-color: #4F46E5;
+            color: white;
+            border-color: #4F46E5;
+        }
+        /* 헤더 높이만큼 스크롤 위치 조정 */
+        section {
+            scroll-margin-top: 5rem;
+        }
+    </style>
+</head>
+<body id="top" class="bg-slate-50 text-slate-800 font-sans">
+
+    <!-- 헤더 -->
+    <header class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-10">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-indigo-600 flex items-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <a href="#top" data-i18n="appTitle">Markdown Guide</a>
+            </h1>
+            <div class="flex items-center gap-4">
+                <span class="text-sm text-slate-500 hidden sm:inline" data-i18n="subtitle">HTML Version</span>
+                <div class="flex gap-1">
+                    <button onclick="setLanguage('en')" id="btn-en" class="lang-btn px-2 py-1 text-xs font-semibold border rounded hover:bg-slate-100 transition">EN</button>
+                    <button onclick="setLanguage('ko')" id="btn-ko" class="lang-btn px-2 py-1 text-xs font-semibold border rounded hover:bg-slate-100 transition">KR</button>
+                    <button onclick="setLanguage('fr')" id="btn-fr" class="lang-btn px-2 py-1 text-xs font-semibold border rounded hover:bg-slate-100 transition">FR</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-10">
+        
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-4" data-i18n="mainTitle">Markdown Basic Syntax</h2>
+            <p class="text-lg text-slate-600" data-i18n="mainDesc">
+                Markdown is a text-based markup language.<br>
+                Enter Syntax on the left to see the Result on the right.
+            </p>
+        </div>
+
+        <!-- 목차 (TOC) -->
+        <nav class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-12">
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b pb-2" data-i18n="tocTitle">Table of Contents</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2 text-sm">
+                <li><a href="#sec-1" class="text-indigo-600 hover:text-indigo-800 hover:underline flex items-center gap-1"><span class="text-slate-300">1.</span> <span data-i18n="sec1Title">Headers</span></a></li>
+                <li><a href="#sec-2" class="text-indigo-600 hover:text-indigo-800 hover:underline flex items-center gap-1"><span class="text-slate-300">2.</span> <span data-i18n="sec2Title">Emphasis</span></a></li>
+                <li><a href="#sec-3" class="text-indigo-600 hover:text-indigo-800 hover:underline flex items-center gap-1"><span class="text-slate-300">3.</span> <span data-i18n="sec3Title">Lists</span></a></li>
+                <li><a href="#sec-4" class="text-indigo-600 hover:text-indigo-800 hover:underline flex items-center gap-1"><span class="text-slate-300">4.</span> <span data-i18n="sec4Title">Quote & Code</span></a></li>
+                <li><a href="#sec-5" class="text-indigo-600 hover:text-indigo-800 hover:underline flex items-center gap-1"><span class="text-slate-300">5.</span> <span data-i18n="sec5Title">Tables</span></a></li>
+                <li><a href="#sec-6" class="text-indigo-600 hover:text-indigo-800 hover:underline flex items-center gap-1"><span class="text-slate-300">6.</span> <span data-i18n="sec6Title">Links & Images</span></a></li>
+                <li><a href="#sec-7" class="text-indigo-600 hover:text-indigo-800 hover:underline flex items-center gap-1"><span class="text-slate-300">7.</span> <span data-i18n="sec7Title">Task Lists & Divider</span></a></li>
+                <li><a href="#sec-8" class="text-indigo-600 hover:text-indigo-800 hover:underline flex items-center gap-1"><span class="text-slate-300">8.</span> <span data-i18n="sec8Title">Advanced</span></a></li>
+            </ul>
+        </nav>
+
+        <!-- 1. 제목 (Headers) -->
+        <section id="sec-1" class="mb-12">
+            <div class="flex items-center justify-between mb-4 border-b pb-2 border-slate-100">
+                <div class="flex items-center">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded mr-2">Section 1</span>
+                    <h3 class="text-2xl font-bold text-slate-800" data-i18n="sec1Title">Headers</h3>
+                </div>
+                <a href="#top" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center gap-1 transition-colors group">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                    <span data-i18n="btnTop" class="hidden sm:inline group-hover:underline">Top</span>
+                </a>
+            </div>
+            <p class="text-slate-600 mb-4" data-i18n="sec1Desc">Use `#` count to determine header size (h1 ~ h6).</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Code -->
+                <div class="bg-slate-800 rounded-lg p-4 text-slate-300 shadow-inner font-mono text-sm overflow-x-auto">
+<pre data-i18n="sec1Code"># H1 Title
+## H2 Title
+### H3 Title
+#### H4 Title</pre>
+                </div>
+                <!-- Preview -->
+                <div class="bg-white rounded-lg p-6 border border-slate-200 shadow-sm" data-i18n="sec1Preview">
+                    <h1 class="text-4xl font-bold mb-4 border-b pb-2">H1 Title</h1>
+                    <h2 class="text-3xl font-bold mb-3 border-b pb-1">H2 Title</h2>
+                    <h3 class="text-2xl font-bold mb-2">H3 Title</h3>
+                    <h4 class="text-xl font-bold">H4 Title</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 텍스트 강조 -->
+        <section id="sec-2" class="mb-12">
+            <div class="flex items-center justify-between mb-4 border-b pb-2 border-slate-100">
+                <div class="flex items-center">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded mr-2">Section 2</span>
+                    <h3 class="text-2xl font-bold text-slate-800" data-i18n="sec2Title">Emphasis</h3>
+                </div>
+                <a href="#top" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center gap-1 transition-colors group">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                    <span data-i18n="btnTop" class="hidden sm:inline group-hover:underline">Top</span>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-800 rounded-lg p-4 text-slate-300 shadow-inner font-mono text-sm overflow-x-auto">
+<pre data-i18n="sec2Code">**Bold**
+*Italic*
+~~Strikethrough~~</pre>
+                </div>
+                <div class="bg-white rounded-lg p-6 border border-slate-200 shadow-sm flex flex-col justify-center space-y-2" data-i18n="sec2Preview">
+                    <p><strong>Bold</strong></p>
+                    <p><em>Italic</em></p>
+                    <p><del>Strikethrough</del></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 목록 -->
+        <section id="sec-3" class="mb-12">
+            <div class="flex items-center justify-between mb-4 border-b pb-2 border-slate-100">
+                <div class="flex items-center">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded mr-2">Section 3</span>
+                    <h3 class="text-2xl font-bold text-slate-800" data-i18n="sec3Title">Lists</h3>
+                </div>
+                <a href="#top" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center gap-1 transition-colors group">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                    <span data-i18n="btnTop" class="hidden sm:inline group-hover:underline">Top</span>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-800 rounded-lg p-4 text-slate-300 shadow-inner font-mono text-sm overflow-x-auto">
+<pre data-i18n="sec3Code">- Unordered Item 1
+- Unordered Item 2
+  - Indented Item
+
+1. Ordered Item 1
+2. Ordered Item 2</pre>
+                </div>
+                <div class="bg-white rounded-lg p-6 border border-slate-200 shadow-sm" data-i18n="sec3Preview">
+                    <ul class="list-disc list-inside mb-4 ml-2">
+                        <li>Unordered Item 1</li>
+                        <li>Unordered Item 2
+                            <ul class="list-disc list-inside ml-6 text-slate-500">
+                                <li>Indented Item</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ol class="list-decimal list-inside ml-2">
+                        <li>Ordered Item 1</li>
+                        <li>Ordered Item 2</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 인용문 및 코드 -->
+        <section id="sec-4" class="mb-12">
+            <div class="flex items-center justify-between mb-4 border-b pb-2 border-slate-100">
+                <div class="flex items-center">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded mr-2">Section 4</span>
+                    <h3 class="text-2xl font-bold text-slate-800" data-i18n="sec4Title">Quote & Code</h3>
+                </div>
+                <a href="#top" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center gap-1 transition-colors group">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                    <span data-i18n="btnTop" class="hidden sm:inline group-hover:underline">Top</span>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-800 rounded-lg p-4 text-slate-300 shadow-inner font-mono text-sm overflow-x-auto">
+<pre data-i18n="sec4Code">> Markdown is concise.
+> Nested quotes are possible.
+
+Inline code is `code` like this.
+
+```javascript
+// Code Block
+console.log("Hello World");
+```</pre>
+                </div>
+                <div class="bg-white rounded-lg p-6 border border-slate-200 shadow-sm" data-i18n="sec4Preview">
+                    <blockquote class="border-l-4 border-indigo-500 pl-4 italic text-slate-600 mb-4 bg-slate-50 py-2">
+                        Markdown is concise.<br>
+                        Nested quotes are possible.
+                    </blockquote>
+                    <p class="mb-4">Inline code is <code class="bg-slate-100 px-1 py-0.5 rounded text-pink-600 font-mono text-sm">code</code> like this.</p>
+                    <pre class="bg-slate-900 text-slate-50 p-3 rounded-lg overflow-x-auto text-sm font-mono"><code><span class="text-slate-400">// Code Block</span>
+<span class="text-blue-300">console</span>.<span class="text-yellow-300">log</span>(<span class="text-green-300">"Hello World"</span>);</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 표 (Table) -->
+        <section id="sec-5" class="mb-12">
+            <div class="flex items-center justify-between mb-4 border-b pb-2 border-slate-100">
+                <div class="flex items-center">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded mr-2">Section 5</span>
+                    <h3 class="text-2xl font-bold text-slate-800" data-i18n="sec5Title">Tables</h3>
+                </div>
+                <a href="#top" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center gap-1 transition-colors group">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                    <span data-i18n="btnTop" class="hidden sm:inline group-hover:underline">Top</span>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-800 rounded-lg p-4 text-slate-300 shadow-inner font-mono text-sm overflow-x-auto">
+<pre data-i18n="sec5Code">| Item | Price | Align |
+| :--- | :---: | ---: |
+| Apple | 1000 | Left |
+| Pear | 2000 | Center |
+| Grape | 3000 | Right |</pre>
+                </div>
+                <div class="bg-white rounded-lg p-6 border border-slate-200 shadow-sm" data-i18n="sec5Preview">
+                    <table class="min-w-full text-sm text-left text-slate-500">
+                        <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 rounded-tl-lg">Item</th>
+                                <th scope="col" class="px-6 py-3 text-center">Price</th>
+                                <th scope="col" class="px-6 py-3 text-right rounded-tr-lg">Align</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-white border-b hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Apple</td>
+                                <td class="px-6 py-4 text-center">1000</td>
+                                <td class="px-6 py-4 text-right">Left</td>
+                            </tr>
+                            <tr class="bg-white border-b hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900">Pear</td>
+                                <td class="px-6 py-4 text-center">2000</td>
+                                <td class="px-6 py-4 text-right">Center</td>
+                            </tr>
+                            <tr class="bg-white hover:bg-slate-50">
+                                <td class="px-6 py-4 font-medium text-slate-900 rounded-bl-lg">Grape</td>
+                                <td class="px-6 py-4 text-center">3000</td><td class="px-6 py-4 text-right rounded-br-lg">Right</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. 링크 및 이미지 -->
+        <section id="sec-6" class="mb-12">
+            <div class="flex items-center justify-between mb-4 border-b pb-2 border-slate-100">
+                <div class="flex items-center">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded mr-2">Section 6</span>
+                    <h3 class="text-2xl font-bold text-slate-800" data-i18n="sec6Title">Links & Images</h3>
+                </div>
+                <a href="#top" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center gap-1 transition-colors group">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                    <span data-i18n="btnTop" class="hidden sm:inline group-hover:underline">Top</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-800 rounded-lg p-4 text-slate-300 shadow-inner font-mono text-sm overflow-x-auto">
+<pre data-i18n="sec6Code">[Google Link](https://google.com)
+
+![Random Image](https://picsum.photos/200)
+![Description](https://via.placeholder.com/150)</pre>
+                </div>
+                <div class="bg-white rounded-lg p-6 border border-slate-200 shadow-sm flex flex-col items-start gap-4" data-i18n="sec6Preview">
+                    <a href="https://google.com" target="_blank" class="text-indigo-600 hover:text-indigo-800 underline">Google Link (Click me)</a>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="p-2 border rounded bg-slate-50">
+                            <img src="https://picsum.photos/200" alt="Random" class="rounded shadow-sm" style="width: 150px; height: 150px; object-fit: cover;">
+                            <p class="text-xs text-center text-slate-400 mt-1">Random Image</p>
+                        </div>
+                        <div class="p-2 border rounded bg-slate-50">
+                            <img src="https://via.placeholder.com/150" alt="Placeholder" class="rounded max-w-full h-auto">
+                            <p class="text-xs text-center text-slate-400 mt-1">Placeholder</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. 체크박스 및 구분선 -->
+        <section id="sec-7" class="mb-12">
+            <div class="flex items-center justify-between mb-4 border-b pb-2 border-slate-100">
+                <div class="flex items-center">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded mr-2">Section 7</span>
+                    <h3 class="text-2xl font-bold text-slate-800" data-i18n="sec7Title">Task Lists & Divider</h3>
+                </div>
+                <a href="#top" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center gap-1 transition-colors group">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                    <span data-i18n="btnTop" class="hidden sm:inline group-hover:underline">Top</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-800 rounded-lg p-4 text-slate-300 shadow-inner font-mono text-sm overflow-x-auto">
+<pre data-i18n="sec7Code">- [x] Completed task
+- [ ] Todo task
+
+---
+
+Above is a Divider (Horizontal Rule).</pre>
+                </div>
+                <div class="bg-white rounded-lg p-6 border border-slate-200 shadow-sm" data-i18n="sec7Preview">
+                    <ul class="mb-4 space-y-2">
+                        <li class="flex items-center gap-2">
+                            <input type="checkbox" checked disabled class="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500">
+                            <span class="line-through text-slate-500">Completed task</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <input type="checkbox" disabled class="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500">
+                            <span>Todo task</span>
+                        </li>
+                    </ul>
+                    <hr class="my-6 border-slate-300 border-t-2">
+                    <p class="text-slate-600">Above is a Divider (Horizontal Rule).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. 고급 기능 -->
+        <section id="sec-8" class="mb-12">
+            <div class="flex items-center justify-between mb-4 border-b pb-2 border-slate-100">
+                <div class="flex items-center">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded mr-2">Section 8</span>
+                    <h3 class="text-2xl font-bold text-slate-800" data-i18n="sec8Title">Advanced (HTML & Escaping)</h3>
+                </div>
+                <a href="#top" class="text-xs text-slate-400 hover:text-indigo-600 flex items-center gap-1 transition-colors group">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                    <span data-i18n="btnTop" class="hidden sm:inline group-hover:underline">Top</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-800 rounded-lg p-4 text-slate-300 shadow-inner font-mono text-sm overflow-x-auto">
+<pre data-i18n="sec8Code">Use &lt;u&gt;HTML Tags&lt;/u&gt; inside Markdown.
+
+Escape special chars: \# (Backslash)
+Keys: &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt;</pre>
+                </div>
+                <div class="bg-white rounded-lg p-6 border border-slate-200 shadow-sm" data-i18n="sec8Preview">
+                    <p class="mb-4">Use <u class="text-indigo-600 decoration-wavy">HTML Tags</u> inside Markdown.</p>
+                    <p class="mb-4">Escape special chars: # (Not a header)</p>
+                    <p>Keys: 
+                        <kbd class="px-2 py-1.5 text-xs font-semibold text-slate-800 bg-slate-100 border border-slate-200 rounded-lg shadow-[0px_2px_0px_0px_rgba(0,0,0,0.08)]">Ctrl</kbd> + 
+                        <kbd class="px-2 py-1.5 text-xs font-semibold text-slate-800 bg-slate-100 border border-slate-200 rounded-lg shadow-[0px_2px_0px_0px_rgba(0,0,0,0.08)]">C</kbd>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-white py-8 text-center">
+        <p class="text-slate-400 text-sm" data-i18n="footer">© 2024 Markdown Guide. Created for learning purposes.</p>
+    </footer>
+
+    <script>
+        // 번역 데이터 (English, Korean, French)
+        const i18n = {
+            en: {
+                appTitle: "Markdown Guide",
+                subtitle: "HTML Version",
+                mainTitle: "Markdown Basic Syntax",
+                mainDesc: "Markdown is a text-based markup language.<br>Enter Syntax on the left to see the Result on the right.",
+                
+                tocTitle: "Table of Contents",
+                btnTop: "Top",
+
+                sec1Title: "Headers",
+                sec1Desc: "Use `#` count to determine header size (h1 ~ h6).",
+                sec1Code: "# H1 Title\n## H2 Title\n### H3 Title\n#### H4 Title",
+                sec1Preview: '<h1 class="text-4xl font-bold mb-4 border-b pb-2">H1 Title</h1><h2 class="text-3xl font-bold mb-3 border-b pb-1">H2 Title</h2><h3 class="text-2xl font-bold mb-2">H3 Title</h3><h4 class="text-xl font-bold">H4 Title</h4>',
+
+                sec2Title: "Emphasis",
+                sec2Code: "**Bold**\n*Italic*\n~~Strikethrough~~",
+                sec2Preview: '<p><strong>Bold</strong></p><p><em>Italic</em></p><p><del>Strikethrough</del></p>',
+
+                sec3Title: "Lists",
+                sec3Code: "- Unordered Item 1\n- Unordered Item 2\n  - Indented Item\n\n1. Ordered Item 1\n2. Ordered Item 2",
+                sec3Preview: '<ul class="list-disc list-inside mb-4 ml-2"><li>Unordered Item 1</li><li>Unordered Item 2<ul class="list-disc list-inside ml-6 text-slate-500"><li>Indented Item</li></ul></li></ul><ol class="list-decimal list-inside ml-2"><li>Ordered Item 1</li><li>Ordered Item 2</li></ol>',
+
+                sec4Title: "Quote & Code",
+                sec4Code: "> Markdown is concise.\n> Nested quotes are possible.\n\nInline code is `code` like this.\n\n```javascript\n// Code Block\nconsole.log(\"Hello World\");\n```",
+                sec4Preview: '<blockquote class="border-l-4 border-indigo-500 pl-4 italic text-slate-600 mb-4 bg-slate-50 py-2">Markdown is concise.<br>Nested quotes are possible.</blockquote><p class="mb-4">Inline code is <code class="bg-slate-100 px-1 py-0.5 rounded text-pink-600 font-mono text-sm">code</code> like this.</p><pre class="bg-slate-900 text-slate-50 p-3 rounded-lg overflow-x-auto text-sm font-mono"><code><span class="text-slate-400">// Code Block</span>\n<span class="text-blue-300">console</span>.<span class="text-yellow-300">log</span>(<span class="text-green-300">"Hello World"</span>);</code></pre>',
+
+                sec5Title: "Tables",
+                sec5Code: "| Item | Price | Align |\n| :--- | :---: | ---: |\n| Apple | 1000 | Left |\n| Pear | 2000 | Center |\n| Grape | 3000 | Right |",
+                sec5Preview: '<table class="min-w-full text-sm text-left text-slate-500"><thead class="text-xs text-slate-700 uppercase bg-slate-100"><tr><th scope="col" class="px-6 py-3 rounded-tl-lg">Item</th><th scope="col" class="px-6 py-3 text-center">Price</th><th scope="col" class="px-6 py-3 text-right rounded-tr-lg">Align</th></tr></thead><tbody><tr class="bg-white border-b hover:bg-slate-50"><td class="px-6 py-4 font-medium text-slate-900">Apple</td><td class="px-6 py-4 text-center">1000</td><td class="px-6 py-4 text-right">Left</td></tr><tr class="bg-white border-b hover:bg-slate-50"><td class="px-6 py-4 font-medium text-slate-900">Pear</td><td class="px-6 py-4 text-center">2000</td><td class="px-6 py-4 text-right">Center</td></tr><tr class="bg-white hover:bg-slate-50"><td class="px-6 py-4 font-medium text-slate-900 rounded-bl-lg">Grape</td><td class="px-6 py-4 text-center">3000</td><td class="px-6 py-4 text-right rounded-br-lg">Right</td></tr></tbody></table>',
+
+                sec6Title: "Links & Images",
+                sec6Code: "[Google Link](https://google.com)\n\n![Random Image](https://picsum.photos/200)\n![Description](https://via.placeholder.com/150)",
+                sec6Preview: '<a href="https://google.com" target="_blank" class="text-indigo-600 hover:text-indigo-800 underline">Google Link (Click me)</a><div class="flex flex-wrap gap-4"><div class="p-2 border rounded bg-slate-50"><img src="https://picsum.photos/200" alt="Random" class="rounded shadow-sm" style="width: 150px; height: 150px; object-fit: cover;"><p class="text-xs text-center text-slate-400 mt-1">Random Image</p></div><div class="p-2 border rounded bg-slate-50"><img src="https://via.placeholder.com/150" alt="Placeholder" class="rounded max-w-full h-auto"><p class="text-xs text-center text-slate-400 mt-1">Placeholder</p></div></div>',
+
+                sec7Title: "Task Lists & Divider",
+                sec7Code: "- [x] Completed task\n- [ ] Todo task\n\n---\n\nAbove is a Divider (Horizontal Rule).",
+                sec7Preview: '<ul class="mb-4 space-y-2"><li class="flex items-center gap-2"><input type="checkbox" checked disabled class="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500"><span class="line-through text-slate-500">Completed task</span></li><li class="flex items-center gap-2"><input type="checkbox" disabled class="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500"><span>Todo task</span></li></ul><hr class="my-6 border-slate-300 border-t-2"><p class="text-slate-600">Above is a Divider (Horizontal Rule).</p>',
+
+                sec8Title: "Advanced (HTML & Escaping)",
+                sec8Code: "Use &lt;u&gt;HTML Tags&lt;/u&gt; inside Markdown.\n\nEscape special chars: \\# (Backslash)\nKeys: &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt;",
+                sec8Preview: '<p class="mb-4">Use <u class="text-indigo-600 decoration-wavy">HTML Tags</u> inside Markdown.</p><p class="mb-4">Escape special chars: # (Not a header)</p><p>Keys: <kbd class="px-2 py-1.5 text-xs font-semibold text-slate-800 bg-slate-100 border border-slate-200 rounded-lg shadow-[0px_2px_0px_0px_rgba(0,0,0,0.08)]">Ctrl</kbd> + <kbd class="px-2 py-1.5 text-xs font-semibold text-slate-800 bg-slate-100 border border-slate-200 rounded-lg shadow-[0px_2px_0px_0px_rgba(0,0,0,0.08)]">C</kbd></p>',
+
+                footer: "© 2024 Markdown Guide. Created for learning purposes."
+            },
+            ko: {
+                appTitle: "마크다운 가이드",
+                subtitle: "HTML 버전",
+                mainTitle: "마크다운 기본 문법",
+                mainDesc: "마크다운(Markdown)은 텍스트 기반의 마크업 언어입니다.<br>왼쪽의 문법(Syntax)을 입력하면 오른쪽의 결과(Result)처럼 보입니다.",
+                
+                tocTitle: "목차",
+                btnTop: "위로",
+
+                sec1Title: "제목 (Headers)",
+                sec1Desc: "`#`의 개수로 제목의 크기를 조절합니다 (h1 ~ h6).",
+                sec1Code: "# H1 제목\n## H2 제목\n### H3 제목\n#### H4 제목",
+                sec1Preview: '<h1 class="text-4xl font-bold mb-4 border-b pb-2">H1 제목</h1><h2 class="text-3xl font-bold mb-3 border-b pb-1">H2 제목</h2><h3 class="text-2xl font-bold mb-2">H3 제목</h3><h4 class="text-xl font-bold">H4 제목</h4>',
+
+                sec2Title: "텍스트 강조 (Emphasis)",
+                sec2Code: "**굵게(Bold)**\n*기울임(Italic)*\n~~취소선(Strikethrough)~~",
+                sec2Preview: '<p><strong>굵게(Bold)</strong></p><p><em>기울임(Italic)</em></p><p><del>취소선(Strikethrough)</del></p>',
+
+                sec3Title: "목록 (Lists)",
+                sec3Code: "- 순서 없는 목록 1\n- 순서 없는 목록 2\n  - 들여쓰기 (공백 2칸)\n\n1. 순서 있는 목록 1\n2. 순서 있는 목록 2",
+                sec3Preview: '<ul class="list-disc list-inside mb-4 ml-2"><li>순서 없는 목록 1</li><li>순서 없는 목록 2<ul class="list-disc list-inside ml-6 text-slate-500"><li>들여쓰기</li></ul></li></ul><ol class="list-decimal list-inside ml-2"><li>순서 있는 목록 1</li><li>순서 있는 목록 2</li></ol>',
+
+                sec4Title: "인용문 & 코드 (Quote & Code)",
+                sec4Code: "> 마크다운은 간결합니다.\n> 인용문 안에 인용 가능합니다.\n\n인라인 코드는 `code` 이렇게 씁니다.\n\n```javascript\n// 코드 블록\nconsole.log(\"Hello World\");\n```",
+                sec4Preview: '<blockquote class="border-l-4 border-indigo-500 pl-4 italic text-slate-600 mb-4 bg-slate-50 py-2">마크다운은 간결합니다.<br>인용문 안에 인용 가능합니다.</blockquote><p class="mb-4">인라인 코드는 <code class="bg-slate-100 px-1 py-0.5 rounded text-pink-600 font-mono text-sm">code</code> 이렇게 씁니다.</p><pre class="bg-slate-900 text-slate-50 p-3 rounded-lg overflow-x-auto text-sm font-mono"><code><span class="text-slate-400">// 코드 블록</span>\n<span class="text-blue-300">console</span>.<span class="text-yellow-300">log</span>(<span class="text-green-300">"Hello World"</span>);</code></pre>',
+
+                sec5Title: "표 (Tables)",
+                sec5Code: "| 품목 | 가격 | 정렬 |\n| :--- | :---: | ---: |\n| 사과 | 1000 | 좌측 |\n| 배 | 2000 | 중앙 |\n| 포도 | 3000 | 우측 |",
+                sec5Preview: '<table class="min-w-full text-sm text-left text-slate-500"><thead class="text-xs text-slate-700 uppercase bg-slate-100"><tr><th scope="col" class="px-6 py-3 rounded-tl-lg">품목</th><th scope="col" class="px-6 py-3 text-center">가격</th><th scope="col" class="px-6 py-3 text-right rounded-tr-lg">정렬</th></tr></thead><tbody><tr class="bg-white border-b hover:bg-slate-50"><td class="px-6 py-4 font-medium text-slate-900">사과</td><td class="px-6 py-4 text-center">1000</td><td class="px-6 py-4 text-right">좌측</td></tr><tr class="bg-white border-b hover:bg-slate-50"><td class="px-6 py-4 font-medium text-slate-900">배</td><td class="px-6 py-4 text-center">2000</td><td class="px-6 py-4 text-right">중앙</td></tr><tr class="bg-white hover:bg-slate-50"><td class="px-6 py-4 font-medium text-slate-900 rounded-bl-lg">포도</td><td class="px-6 py-4 text-center">3000</td><td class="px-6 py-4 text-right">우측</td></tr></tbody></table>',
+
+                sec6Title: "링크 및 이미지",
+                sec6Code: "[구글 링크](https://google.com)\n\n![랜덤 이미지](https://picsum.photos/200)\n![이미지 설명](https://via.placeholder.com/150)",
+                sec6Preview: '<a href="https://google.com" target="_blank" class="text-indigo-600 hover:text-indigo-800 underline">구글 링크 (클릭 시 이동)</a><div class="flex flex-wrap gap-4"><div class="p-2 border rounded bg-slate-50"><img src="https://picsum.photos/200" alt="랜덤 이미지" class="rounded shadow-sm" style="width: 150px; height: 150px; object-fit: cover;"><p class="text-xs text-center text-slate-400 mt-1">랜덤 이미지</p></div><div class="p-2 border rounded bg-slate-50"><img src="https://via.placeholder.com/150" alt="이미지 설명" class="rounded max-w-full h-auto"><p class="text-xs text-center text-slate-400 mt-1">플레이스홀더</p></div></div>',
+
+                sec7Title: "체크박스 및 구분선",
+                sec7Code: "- [x] 완료된 작업\n- [ ] 해야 할 작업\n\n---\n\n위에는 구분선(Horizontal Rule)입니다.",
+                sec7Preview: '<ul class="mb-4 space-y-2"><li class="flex items-center gap-2"><input type="checkbox" checked disabled class="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500"><span class="line-through text-slate-500">완료된 작업</span></li><li class="flex items-center gap-2"><input type="checkbox" disabled class="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500"><span>해야 할 작업</span></li></ul><hr class="my-6 border-slate-300 border-t-2"><p class="text-slate-600">위에는 구분선(Horizontal Rule)입니다.</p>',
+
+                sec8Title: "고급 (HTML & 이스케이프)",
+                sec8Code: "마크다운에서 &lt;u&gt;HTML 태그&lt;/u&gt; 사용 가능\n\n특수문자 표시: \\# (역슬래시 사용)\n단축키 예시: &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt;",
+                sec8Preview: '<p class="mb-4">마크다운에서 <u class="text-indigo-600 decoration-wavy">HTML 태그</u> 사용 가능</p><p class="mb-4">특수문자 표시: # (제목으로 인식되지 않음)</p><p>단축키 예시: <kbd class="px-2 py-1.5 text-xs font-semibold text-slate-800 bg-slate-100 border border-slate-200 rounded-lg shadow-[0px_2px_0px_0px_rgba(0,0,0,0.08)]">Ctrl</kbd> + <kbd class="px-2 py-1.5 text-xs font-semibold text-slate-800 bg-slate-100 border border-slate-200 rounded-lg shadow-[0px_2px_0px_0px_rgba(0,0,0,0.08)]">C</kbd></p>',
+
+                footer: "© 2024 Markdown HTML Guide. Created for learning purposes."
+            },
+            fr: {
+                appTitle: "Guide Markdown",
+                subtitle: "Version HTML",
+                mainTitle: "Syntaxe de Base Markdown",
+                mainDesc: "Markdown est un langage de balisage léger.<br>Entrez la syntaxe à gauche pour voir le résultat à droite.",
+                
+                tocTitle: "Table des Matières",
+                btnTop: "Haut",
+
+                sec1Title: "Titres (Headers)",
+                sec1Desc: "Utilisez le nombre de `#` pour la taille du titre (h1 ~ h6).",
+                sec1Code: "# Titre H1\n## Titre H2\n### Titre H3\n#### Titre H4",
+                sec1Preview: '<h1 class="text-4xl font-bold mb-4 border-b pb-2">Titre H1</h1><h2 class="text-3xl font-bold mb-3 border-b pb-1">Titre H2</h2><h3 class="text-2xl font-bold mb-2">Titre H3</h3><h4 class="text-xl font-bold">Titre H4</h4>',
+
+                sec2Title: "Emphase (Emphasis)",
+                sec2Code: "**Gras**\n*Italique*\n~~Barré~~",
+                sec2Preview: '<p><strong>Gras</strong></p><p><em>Italique</em></p><p><del>Barré</del></p>',
+
+                sec3Title: "Listes",
+                sec3Code: "- Liste non ordonnée 1\n- Liste non ordonnée 2\n  - Élément indenté\n\n1. Liste ordonnée 1\n2. Liste ordonnée 2",
+                sec3Preview: '<ul class="list-disc list-inside mb-4 ml-2"><li>Liste non ordonnée 1</li><li>Liste non ordonnée 2<ul class="list-disc list-inside ml-6 text-slate-500"><li>Élément indenté</li></ul></li></ul><ol class="list-decimal list-inside ml-2"><li>Liste ordonnée 1</li><li>Liste ordonnée 2</li></ol>',
+
+                sec4Title: "Citation & Code",
+                sec4Code: "> Markdown est concis.\n> Citations imbriquées possibles.\n\nCode en ligne: `code`.\n\n```javascript\n// Bloc de code\nconsole.log(\"Bonjour\");\n```",
+                sec4Preview: '<blockquote class="border-l-4 border-indigo-500 pl-4 italic text-slate-600 mb-4 bg-slate-50 py-2">Markdown est concis.<br>Citations imbriquées possibles.</blockquote><p class="mb-4">Code en ligne: <code class="bg-slate-100 px-1 py-0.5 rounded text-pink-600 font-mono text-sm">code</code>.</p><pre class="bg-slate-900 text-slate-50 p-3 rounded-lg overflow-x-auto text-sm font-mono"><code><span class="text-slate-400">// Bloc de code</span>\n<span class="text-blue-300">console</span>.<span class="text-yellow-300">log</span>(<span class="text-green-300">"Bonjour"</span>);</code></pre>',
+
+                sec5Title: "Tableaux",
+                sec5Code: "| Article | Prix | Align |\n| :--- | :---: | ---: |\n| Pomme | 1000 | Gauche |\n| Poire | 2000 | Centre |\n| Raisin | 3000 | Droite |",
+                sec5Preview: '<table class="min-w-full text-sm text-left text-slate-500"><thead class="text-xs text-slate-700 uppercase bg-slate-100"><tr><th scope="col" class="px-6 py-3 rounded-tl-lg">Article</th><th scope="col" class="px-6 py-3 text-center">Prix</th><th scope="col" class="px-6 py-3 text-right rounded-tr-lg">Align</th></tr></thead><tbody><tr class="bg-white border-b hover:bg-slate-50"><td class="px-6 py-4 font-medium text-slate-900">Pomme</td><td class="px-6 py-4 text-center">1000</td><td class="px-6 py-4 text-right">Gauche</td></tr><tr class="bg-white border-b hover:bg-slate-50"><td class="px-6 py-4 font-medium text-slate-900">Poire</td><td class="px-6 py-4 text-center">2000</td><td class="px-6 py-4 text-right">Centre</td></tr><tr class="bg-white hover:bg-slate-50"><td class="px-6 py-4 font-medium text-slate-900 rounded-bl-lg">Raisin</td><td class="px-6 py-4 text-center">3000</td><td class="px-6 py-4 text-right">Droite</td></tr></tbody></table>',
+
+                sec6Title: "Liens & Images",
+                sec6Code: "[Lien Google](https://google.com)\n\n![Image Aléatoire](https://picsum.photos/200)\n![Description](https://via.placeholder.com/150)",
+                sec6Preview: '<a href="https://google.com" target="_blank" class="text-indigo-600 hover:text-indigo-800 underline">Lien Google (Cliquer)</a><div class="flex flex-wrap gap-4"><div class="p-2 border rounded bg-slate-50"><img src="https://picsum.photos/200" alt="Aléatoire" class="rounded shadow-sm" style="width: 150px; height: 150px; object-fit: cover;"><p class="text-xs text-center text-slate-400 mt-1">Image Aléatoire</p></div><div class="p-2 border rounded bg-slate-50"><img src="https://via.placeholder.com/150" alt="Description" class="rounded max-w-full h-auto"><p class="text-xs text-center text-slate-400 mt-1">Description</p></div></div>',
+
+                sec7Title: "Tâches & Séparateur",
+                sec7Code: "- [x] Tâche terminée\n- [ ] Tâche à faire\n\n---\n\nCi-dessus un séparateur.",
+                sec7Preview: '<ul class="mb-4 space-y-2"><li class="flex items-center gap-2"><input type="checkbox" checked disabled class="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500"><span class="line-through text-slate-500">Tâche terminée</span></li><li class="flex items-center gap-2"><input type="checkbox" disabled class="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500"><span>Tâche à faire</span></li></ul><hr class="my-6 border-slate-300 border-t-2"><p class="text-slate-600">Ci-dessus un séparateur.</p>',
+
+                sec8Title: "Avancé (HTML & Escaping)",
+                sec8Code: "Utilisez &lt;u&gt;Tags HTML&lt;/u&gt; dans Markdown.\n\nÉchappement: \\# (Antislash)\nTouches: &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt;",
+                sec8Preview: '<p class="mb-4">Utilisez <u class="text-indigo-600 decoration-wavy">Tags HTML</u> dans Markdown.</p><p class="mb-4">Échappement: # (Pas un titre)</p><p>Touches: <kbd class="px-2 py-1.5 text-xs font-semibold text-slate-800 bg-slate-100 border border-slate-200 rounded-lg shadow-[0px_2px_0px_0px_rgba(0,0,0,0.08)]">Ctrl</kbd> + <kbd class="px-2 py-1.5 text-xs font-semibold text-slate-800 bg-slate-100 border border-slate-200 rounded-lg shadow-[0px_2px_0px_0px_rgba(0,0,0,0.08)]">C</kbd></p>',
+
+                footer: "© 2024 Guide Markdown. Créé à des fins d'apprentissage."
+            }
+        };
+
+        function setLanguage(lang) {
+            // kr 입력 시 ko로 매핑
+            if (lang === 'kr') lang = 'ko';
+            // 지원하지 않는 언어는 en으로 기본 설정
+            if (!i18n[lang]) lang = 'en';
+
+            const texts = i18n[lang];
+            
+            // 모든 data-i18n 요소 업데이트
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (texts[key]) {
+                    el.innerHTML = texts[key];
+                }
+            });
+
+            // 문서 타이틀 업데이트
+            document.title = texts.appTitle;
+            document.documentElement.lang = lang;
+
+            // 버튼 상태 업데이트
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtnId = lang === 'ko' ? 'btn-ko' : (lang === 'fr' ? 'btn-fr' : 'btn-en');
+            document.getElementById(activeBtnId).classList.add('active');
+
+            // URL 업데이트 제거 (보안 오류 방지)
+            // try-catch로 감싸서 가능한 경우에만 시도할 수도 있지만,
+            // 샌드박스 환경에서는 일반적으로 아예 제거하는 것이 안전합니다.
+        }
+
+        // 초기 로드 시 URL 파라미터 확인
+        window.addEventListener('DOMContentLoaded', () => {
+            // URLSearchParams는 읽기 전용으로 접근 시 보안 에러가 덜 발생하지만
+            // 혹시 모를 에러를 대비해 try-catch 처리하거나 기본값 사용
+            let langParam = 'en';
+            try {
+                const params = new URLSearchParams(window.location.search);
+                langParam = params.get('lang') || 'en';
+            } catch (e) {
+                console.log('Cannot read URL params:', e);
+            }
+            setLanguage(langParam);
+        });
+    </script>
+</body>
+</html>
