@@ -5,6 +5,7 @@
 
 ## 🛠 Tools
 - [Markdown Live Viewer](tools/md-live-viewer.html)
+- [PHP Playground](tools/php-online-editor.html)
 
 ## 📅 Guidelines
 - Always use code blocks
