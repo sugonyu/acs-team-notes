@@ -11,7 +11,7 @@
 * Docker Setup
 
 ## 🛠 Tools
-
+* PHP Playground
 * Markdown Live Viewer
 
 ## 📁 Folder Structure
