@@ -1,4 +1,4 @@
-# Shared Learning Notes and Tools
+# Shared Learning Notes & Tools
 
 ## 📌 Topics
 - [Markdown Basics](docs/md-basic.html)
