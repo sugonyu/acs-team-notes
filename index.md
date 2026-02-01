@@ -1,4 +1,4 @@
-# Team Notes Web Page
+# Shared Learning Notes and Tools
 
 ## 📌 Topics
 - [Markdown Basics](docs/md-basic.html)
