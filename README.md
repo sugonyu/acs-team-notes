@@ -1,17 +1,29 @@
 # ACS Team Notes 📘
 
-**GitHub Pages:** [https://sugonyu.github.io/acs-team-notes/](https://sugonyu.github.io/acs-team-notes/)
+Shared notes and tools for the **ACS Web Design class**.
+
+🌐 **Live site:**  
+https://sugonyu.github.io/acs-team-notes/
 
 ---
 
 ## 📌 Topics
-* Markdown Basics
+- Markdown Basics
 
 ## 🛠 Tools
-* PHP Playground
-* Markdown Live Viewer
+- PHP Playground
+- Markdown Live Viewer
+
+---
 
 ## 📁 Folder Structure
-* docs/: Markdown notes
-* tools/: helper tools
-* assets/: images, css
+- `docs/` — Markdown notes
+- `tools/` — Helper tools and demos
+- `assets/` — Images and CSS files
+
+---
+
+## ✅ How to use
+- Browse notes on the live site
+- Use this repository to review examples and tools
+- Contributions may be added during the course
